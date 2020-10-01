@@ -3,3 +3,17 @@
 boost-dev
 qttools-dev
 openssl-dev
+openssl-staticdev
+zlib-dev
+zlib-staticdev
+libtorrent-rasterbar
+libtorrent-rasterbar-dev
+libtorrent-rasterbar-staticdev
+buildreq-cmake
+buildreq-qmake
+sed
+buildreq-configure
+buildreq-make
+systemd
+systemd-dev
+systemd-services
