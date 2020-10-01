@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : qbittorrent
 Version  : 3.0.0
-Release  : 15
+Release  : 16
 URL      : file:///insilications/build/clearlinux/packages/qbittorrent/qbittorrent-release-3.0.0.tar.gz
 Source0  : file:///insilications/build/clearlinux/packages/qbittorrent/qbittorrent-release-3.0.0.tar.gz
 Summary  : No detailed summary available
@@ -85,7 +85,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1601584732
+export SOURCE_DATE_EPOCH=1601594702
 export GCC_IGNORE_WERROR=1
 ## altflags1 content
 export CFLAGS="-g -O3 -march=native -mtune=native -fgraphite-identity -Wall -Wl,--as-needed -Wl,--build-id=sha1 -Wl,--enable-new-dtags -Wl,--hash-style=gnu -Wl,-O2 -Wl,-z,now -Wl,-z,relro -falign-functions=32 -flimit-function-alignment -fasynchronous-unwind-tables -fdevirtualize-at-ltrans -floop-nest-optimize -fno-math-errno -fno-semantic-interposition -fno-stack-protector -fno-trapping-math -ftree-loop-distribute-patterns -ftree-loop-vectorize -ftree-vectorize -funroll-loops -fuse-ld=bfd -fuse-linker-plugin -malign-data=cacheline -feliminate-unused-debug-types -fipa-pta -flto=16 -fno-plt -mtls-dialect=gnu2 -Wl,-sort-common -Wno-error -Wp,-D_REENTRANT -pipe -ffat-lto-objects -fPIC"
@@ -113,16 +113,20 @@ export MAKEFLAGS=%{?_smp_mflags}
 # export CCACHE_DIRECT=1
 # export CCACHE_SLOPPINESS=pch_defines,locale,time_macros
 # export CCACHE_DISABLE=1
+# LDFLAGS="${LDFLAGS} -Wl,--whole-archive /usr/lib64/libz.a /usr/lib64/libssl.a /usr/lib64/libcrypto.a /usr/lib64/libtorrent-rasterbar.a /usr/lib64/libssl.a /usr/lib64/libcrypto.a /usr/lib64/libz.a -pthread -ldl -lm -lmvec -Wl,--no-whole-archive"
+export libtorrent_LIBS="-Wl,--whole-archive /usr/lib64/libtorrent-rasterbar.a -pthread -ldl -lm -lmvec -Wl,--no-whole-archive"
+export openssl_LIBS="-Wl,--whole-archive /usr/lib64/libssl.a /usr/lib64/libcrypto.a -pthread -ldl -lm -lmvec -Wl,--no-whole-archive"
+export zlib_LIBS="-Wl,--whole-archive /usr/lib64/libz.a -pthread -ldl -lm -lmvec -Wl,--no-whole-archive"
 ## altflags1 end
 ##
 %define _lto_cflags 1
 ##
-%configure --enable-shared --disable-static
-make  %{?_smp_mflags}  V=1 VERBOSE=1 LDFLAGS="${LDFLAGS} -Wl,--whole-archive /usr/lib64/libz.a /usr/lib64/libssl.a /usr/lib64/libcrypto.a /usr/lib64/libtorrent-rasterbar.a /usr/lib64/libssl.a /usr/lib64/libcrypto.a /usr/lib64/libz.a -pthread -ldl -lm -lmvec -Wl,--no-whole-archive"
+%configure
+make  %{?_smp_mflags}  V=1 VERBOSE=1
 
 
 %install
-export SOURCE_DATE_EPOCH=1601584732
+export SOURCE_DATE_EPOCH=1601594702
 rm -rf %{buildroot}
 %make_install
 
